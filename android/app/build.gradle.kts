@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -18,8 +20,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
     }
 
     defaultConfig {
@@ -30,7 +32,6 @@ android {
         versionName = flutter.versionName
     }
 
-    // ONGEZA HII BLOK YA SIGNING CONFIGS
     signingConfigs {
         create("release") {
             keyAlias = "star_alias"
@@ -42,16 +43,15 @@ android {
 
     buildTypes {
         release {
-            // BADILISHA HAPA: Tumia release badala ya debug
             signingConfig = signingConfigs.getByName("release")
         }
     }
 }
 
 subprojects {
-    project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class) {
-        kotlinOptions {
-            jvmTarget = "1.8"
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
 }
@@ -59,3 +59,4 @@ subprojects {
 flutter {
     source = "../.."
 }
+
