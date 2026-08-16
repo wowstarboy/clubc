@@ -25,26 +25,20 @@ jobs:
           channel: 'stable'
           cache: true
 
-      # 1. Tengeneza folda ya Android
+      # 1. Tengeneza folda mpya ya Android
       - name: Recreate Fresh Android Folder
         run: flutter create . --platforms=android
-
-      # 2. Rekebisha compileSdk na targetSdk kuwa 34
-      - name: Set compileSdk to 34
-        run: |
-          sed -i 's/compileSdk = flutter.compileSdkVersion/compileSdk = 34/g' android/app/build.gradle
-          sed -i 's/targetSdk = flutter.targetSdkVersion/targetSdk = 34/g' android/app/build.gradle
 
       - name: Install Dependencies
         run: flutter pub get
 
-      # 3. Jenga APK na App Bundle
+      # 2. Jenga APK na App Bundle moja kwa moja
       - name: Build APK and App Bundle
         run: |
           flutter build apk --release --android-skip-build-dependency-validation
           flutter build appbundle --release --android-skip-build-dependency-validation
 
-      # 4. Pakia kwenye Release
+      # 3. Pakia kwenye Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
