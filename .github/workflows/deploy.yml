@@ -25,20 +25,14 @@ jobs:
           channel: 'stable'
           cache: true
 
-      # 1. Kutengeneza folda mpya ya Android kiotomatiki
-      - name: Recreate Fresh Android Folder
-        run: flutter create . --platforms=android
-
       - name: Install Dependencies
         run: flutter pub get
 
-      # 2. Kujenga APK na AAB
       - name: Build APK and App Bundle
         run: |
-          flutter build apk --release --android-skip-build-dependency-validation
-          flutter build appbundle --release --android-skip-build-dependency-validation
+          flutter build apk --release
+          flutter build appbundle --release
 
-      # 3. Kupakia kwenye GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
